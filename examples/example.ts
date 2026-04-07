@@ -1,7 +1,7 @@
 import { LZTClient } from '../src/index.js'
 
 const client = new LZTClient({
-	token: 'YOUR_API_TOKEN_HERE',
+	token: '',
 	locale: 'en',
 	intervalBetweenRequests: 3000,
 })
