@@ -1,6 +1,6 @@
 import { LZTClient } from "../dist/index.js"
 
-const API_TOKEN = 'TOKEN'
+const API_TOKEN = ''
 
 console.log('🧪 Testing Built Package (JavaScript/ESM)\n')
 
