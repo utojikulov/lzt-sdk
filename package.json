@@ -1,9 +1,10 @@
 {
 	"name": "lzt-sdk",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Type-safe SDK for Lolzteam Market and Forum APIs",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
@@ -13,33 +14,36 @@
 	"scripts": {
 		"build": "tsc",
 		"build:tsdown": "tsdown",
+		"dev": "tsc --watch",
 		"test": "vitest",
 		"test:watch": "vitest --watch",
+		"test:local": "tsx examples/example.ts",
+		"test:built": "node examples/example.js",
 		"lint": "eslint src/**/*.ts",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"typecheck": "tsc --noEmit",
-		"generate:types": "openapi-typescript bak/market.json -o src/generated/market.types.ts && openapi-typescript bak/forum.json -o src/generated/forum.types.ts"
-	},
-	"keywords": [],
-	"imports": {
-		"@*": "./src/*"
+		"generate:types": "openapi-typescript bak/market.json -o src/generated/market.types.ts && openapi-typescript bak/forum.json -o src/generated/forum.types.ts",
+		"prepublishOnly": "npm run build"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"README.md",
+		"LICENSE"
 	],
 	"engines": {
 		"node": ">=18.0.0"
 	},
 	"author": "",
 	"license": "ISC",
-	"type": "module",
+	"dependencies": {
+		"openapi-fetch": "^0.17.0"
+	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@types/node": "^25.5.2",
 		"eslint": "^10.2.0",
 		"globals": "^17.4.0",
 		"jiti": "^2.6.1",
-		"openapi-fetch": "^0.17.0",
 		"openapi-typescript": "^7.13.0",
 		"prettier": "^3.8.1",
 		"tsdown": "^0.21.7",
