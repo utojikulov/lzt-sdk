@@ -1,9 +1,6 @@
 import type { HTTPClient } from '../http/index.js'
+import type { paths as ForumPaths } from '../generated/forum.types.js'
 
-/**
- * Forum API methods
- * Handles all forum operations (users, threads, posts, etc.)
- */
 export class ForumAPI {
 	private http: HTTPClient
 
@@ -11,14 +8,18 @@ export class ForumAPI {
 		this.http = http
 	}
 
-	/**
-	 * Get user profile from forum
-	 * @param userId - User ID
-	 */
-	async getUser(userId: number): Promise<unknown> {
-		// TODO: Implement in Task 14
-		throw new Error('Not implemented yet')
+	get raw() {
+		return this.http.forum
 	}
 
-	// More methods will be added in Task 15
+	async getUser(userId: number) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.forum.GET('/users/{user_id}', {
+				params: { path: { user_id: userId } },
+			})
+		})
+	}
+
+	// More convenience methods can be added here
+	// But users can also use client.forum.raw.GET/POST/etc for full access
 }

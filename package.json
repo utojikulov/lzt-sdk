@@ -17,7 +17,8 @@
 		"test:watch": "vitest --watch",
 		"lint": "eslint src/**/*.ts",
 		"format": "prettier --write \"src/**/*.ts\"",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"generate:types": "openapi-typescript bak/market.json -o src/generated/market.types.ts && openapi-typescript bak/forum.json -o src/generated/forum.types.ts"
 	},
 	"keywords": [],
 	"imports": {
@@ -38,6 +39,8 @@
 		"eslint": "^10.2.0",
 		"globals": "^17.4.0",
 		"jiti": "^2.6.1",
+		"openapi-fetch": "^0.17.0",
+		"openapi-typescript": "^7.13.0",
 		"prettier": "^3.8.1",
 		"tsdown": "^0.21.7",
 		"typescript": "^6.0.2",
