@@ -8,6 +8,7 @@
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
+			"require": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		}
 	},
@@ -36,6 +37,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"dotenv": "^17.4.1",
 		"openapi-fetch": "^0.17.0"
 	},
 	"devDependencies": {

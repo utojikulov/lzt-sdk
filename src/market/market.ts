@@ -1,5 +1,10 @@
 import type { HTTPClient } from '../http/index.js'
-import type { paths as MarketPaths } from '../generated/market.types.js'
+import type {
+	CategoryPath,
+	CategoryQuery,
+	CategorySlug,
+} from './categories/types.js'
+import { CATEGORY_PATH } from './categories/registry.js'
 
 export class MarketAPI {
 	private http: HTTPClient
@@ -12,11 +17,19 @@ export class MarketAPI {
 		return this.http.market
 	}
 
-	async search(params?: Record<string, unknown>) {
+	async searchCategory<S extends CategorySlug>(
+		category: S,
+		query?: CategoryQuery<S>,
+	) {
 		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET('/', {
-				params: { query: params as any },
-			})
+			const path = CATEGORY_PATH[category] as CategoryPath<S>
+
+			return await this.http.market.GET(
+				path as never,
+				{
+					params: { query },
+				} as never,
+			)
 		})
 	}
 

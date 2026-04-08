@@ -18976,7 +18976,7 @@ export interface operations {
                      * @description Proxy id that will be used to check account.
                      */
                     proxy_id?: number;
-                    random_proxy?: components["parameters"]["random_proxy"]["schema"];
+                    random_proxy?: boolean;
                     /**
                      * Description
                      * @description Account public description.
@@ -19137,7 +19137,7 @@ export interface operations {
                      * @description Proxy id that will be used to check account.
                      */
                     proxy_id?: number;
-                    random_proxy?: components["parameters"]["random_proxy"]["schema"];
+                    random_proxy?: boolean;
                 };
             };
         };

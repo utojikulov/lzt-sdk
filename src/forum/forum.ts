@@ -1,5 +1,4 @@
 import type { HTTPClient } from '../http/index.js'
-import type { paths as ForumPaths } from '../generated/forum.types.js'
 
 export class ForumAPI {
 	private http: HTTPClient
