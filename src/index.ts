@@ -1,4 +1,6 @@
 export { LZTClient } from './client.js'
 export type { LZTConfig, RequestOptions } from './types/index.js'
 export * from './errors/index.js'
+export * from './market/index.js'
+export * from './forum/index.js'
 export const version = '0.1.0'

@@ -8,9 +8,88 @@
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
-			"require": "./dist/index.js",
 			"types": "./dist/index.d.ts"
-		}
+		},
+		"./market": {
+			"types": "./dist/market/index.d.ts",
+			"import": "./dist/market/index.js"
+		},
+		"./market/*": {
+			"types": "./dist/market/*.d.ts",
+			"import": "./dist/market/*.js"
+		},
+		"./market/*.js": {
+			"types": "./dist/market/*.d.ts",
+			"import": "./dist/market/*.js"
+		},
+		"./forum": {
+			"types": "./dist/forum/index.d.ts",
+			"import": "./dist/forum/index.js"
+		},
+		"./forum/*": {
+			"types": "./dist/forum/*.d.ts",
+			"import": "./dist/forum/*.js"
+		},
+		"./forum/*.js": {
+			"types": "./dist/forum/*.d.ts",
+			"import": "./dist/forum/*.js"
+		},
+		"./errors": {
+			"types": "./dist/errors/index.d.ts",
+			"import": "./dist/errors/index.js"
+		},
+		"./errors/*": {
+			"types": "./dist/errors/*.d.ts",
+			"import": "./dist/errors/*.js"
+		},
+		"./errors/*.js": {
+			"types": "./dist/errors/*.d.ts",
+			"import": "./dist/errors/*.js"
+		},
+		"./types": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/types/index.js"
+		},
+		"./types/*": {
+			"types": "./dist/types/*.d.ts",
+			"import": "./dist/types/*.js"
+		},
+		"./types/*.js": {
+			"types": "./dist/types/*.d.ts",
+			"import": "./dist/types/*.js"
+		},
+		"./generated": {
+			"types": "./dist/generated/index.d.ts",
+			"import": "./dist/generated/index.js"
+		},
+		"./generated/*": {
+			"types": "./dist/generated/*.d.ts",
+			"import": "./dist/generated/*.js"
+		},
+		"./generated/*.js": {
+			"types": "./dist/generated/*.d.ts",
+			"import": "./dist/generated/*.js"
+		},
+		"./http": {
+			"types": "./dist/http/index.d.ts",
+			"import": "./dist/http/index.js"
+		},
+		"./http/*": {
+			"types": "./dist/http/*.d.ts",
+			"import": "./dist/http/*.js"
+		},
+		"./http/*.js": {
+			"types": "./dist/http/*.d.ts",
+			"import": "./dist/http/*.js"
+		},
+		"./dist/market": "./dist/market/index.js",
+		"./dist/forum": "./dist/forum/index.js",
+		"./dist/errors": "./dist/errors/index.js",
+		"./dist/types": "./dist/types/index.js",
+		"./dist/generated": "./dist/generated/index.js",
+		"./dist/http": "./dist/http/index.js",
+		"./dist/*": "./dist/*",
+		"./package.json": "./package.json"
 	},
 	"scripts": {
 		"build": "tsc",
