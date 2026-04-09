@@ -924,7 +924,10 @@ export class MarketAPI {
 
 	async editMarketSettings(body?: OpBody<'Profile.Edit'>) {
 		return this.http.withRateLimit(async () => {
-			return await this.http.market.PUT('/me', body === undefined ? {} : { body })
+			return await this.http.market.PUT(
+				'/me',
+				body === undefined ? {} : { body },
+			)
 		})
 	}
 
@@ -1057,6 +1060,47 @@ export class MarketAPI {
 		return this.http.withRateLimit(async () => {
 			return await this.http.market.POST(
 				'/balance/payout',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
+	/** proxy */
+	async getProxies() {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET('/proxy')
+		})
+	}
+
+	async addProxy(body: OpBody<'Proxy.Add'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.POST('/proxy', { body })
+		})
+	}
+
+	async deleteProxy(body?: OpBody<'Proxy.Delete'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.DELETE(
+				'/proxy',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
+	/** imap */
+	async createImap(body?: OpBody<'Imap.Create'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.POST(
+				'/imap',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
+	async deleteImap(body?: OpBody<'Imap.Delete'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.DELETE(
+				'/imap',
 				body === undefined ? {} : { body },
 			)
 		})
