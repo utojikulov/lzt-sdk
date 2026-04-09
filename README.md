@@ -29,6 +29,10 @@ const { data, error } = await client.forum.raw.GET('/users/{user_id}', {
 
 All parameters are fully typed based on the OpenAPI spec!
 
+```
+all typings are going to be refactored slowly from generated to fully handwritten types in future.
+```
+
 ## Links
 
 - [Market API Documentation](https://lzt-market.readme.io)
