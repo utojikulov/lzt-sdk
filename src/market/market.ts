@@ -1106,6 +1106,13 @@ export class MarketAPI {
 		})
 	}
 
+	/** batch */
+	async executeBatch(body: OpBody<'Batch'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.POST('/batch', { body })
+		})
+	}
+
 	// Steam-specific managing methods intentionally skipped for now.
 
 	// More convenience methods can be added here
