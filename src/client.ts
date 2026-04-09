@@ -1,4 +1,4 @@
-import { HTTPClient } from './http/index.js'
+import { HTTPClient } from './core/index.js'
 import { MarketAPI } from './market/index.js'
 import { ForumAPI } from './forum/index.js'
 import type { LZTConfig } from './types/index.js'

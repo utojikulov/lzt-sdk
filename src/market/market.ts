@@ -1,4 +1,4 @@
-import type { HTTPClient } from '../http/index.js'
+import type { HTTPClient } from '../core'
 import type {
 	CategoryName,
 	CategoryPath,
@@ -9,8 +9,8 @@ import type {
 	OpQuery,
 	PathByPath,
 	QueryByPath,
-} from './categories/types.js'
-import { CATEGORY_PATH } from './categories/registry.js'
+} from './common/types.js'
+import { CATEGORY_PATH } from './common/registry.js'
 
 export class MarketAPI {
 	private http: HTTPClient
