@@ -831,6 +831,40 @@ export class MarketAPI {
 		})
 	}
 
+	/** custom discounts */
+	async getCustomDiscounts() {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET('/custom-discounts')
+		})
+	}
+
+	async editCustomDiscount(body?: OpBody<'CustomDiscounts.Edit'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.PUT(
+				'/custom-discounts',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
+	async createCustomDiscount(body?: OpBody<'CustomDiscounts.Create'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.POST(
+				'/custom-discounts',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
+	async deleteCustomDiscount(body?: OpBody<'CustomDiscounts.Delete'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.DELETE(
+				'/custom-discounts',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
 	// Steam-specific managing methods intentionally skipped for now.
 
 	// More convenience methods can be added here
