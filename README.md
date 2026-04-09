@@ -8,12 +8,12 @@ const client = new LZTClient({
   intervalBetweenRequests: 3000,
 })
 
-const item = await client.market.getItem('12345678', {
+const item = await client.market.managing.getItem('12345678', {
         parse_same_item_ids: true 
 })
 ```
 
-### Direct API Access (Recommended)
+### Direct API Access
 
 ```typescript
 // Market API
@@ -29,9 +29,7 @@ const { data, error } = await client.forum.raw.GET('/users/{user_id}', {
 
 All parameters are fully typed based on the OpenAPI spec!
 
-```
 all typings are going to be refactored slowly from generated to fully handwritten types in future.
-```
 
 ## Links
 
