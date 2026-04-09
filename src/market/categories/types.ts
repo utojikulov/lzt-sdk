@@ -1,5 +1,6 @@
 import type {
 	components,
+	operations,
 	paths as MarketPaths,
 } from '../../generated/market.types.js'
 import type { CATEGORY_PATH } from './registry.js'
@@ -22,3 +23,25 @@ export type PathByPath<P extends keyof MarketPaths> = MarketPaths[P] extends {
 
 export type BaseCategoryQuery = QueryByPath<'/'>
 export type CategoryQuery<S extends CategorySlug> = QueryByPath<CategoryPath<S>>
+
+export type ContentValue<C> = C extends Record<string, infer V> ? V : never
+
+export type OpQuery<K extends keyof operations> = operations[K] extends {
+	parameters: { query?: infer Q }
+}
+	? Exclude<Q, undefined | never>
+	: never
+
+export type OpPath<K extends keyof operations> = operations[K] extends {
+	parameters: { path: infer P }
+}
+	? Exclude<P, undefined | never>
+	: never
+
+export type OpBody<K extends keyof operations> = operations[K] extends {
+	requestBody?: infer RB
+}
+	? RB extends { content: infer C }
+		? ContentValue<C>
+		: never
+	: never
