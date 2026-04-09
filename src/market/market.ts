@@ -1,8 +1,11 @@
 import type { HTTPClient } from '../http/index.js'
 import type {
+	CategoryName,
 	CategoryPath,
 	CategoryQuery,
 	CategorySlug,
+	PathByPath,
+	QueryByPath,
 } from './categories/types.js'
 import { CATEGORY_PATH } from './categories/registry.js'
 
@@ -15,6 +18,12 @@ export class MarketAPI {
 
 	get raw() {
 		return this.http.market
+	}
+
+	private slugToCategoryName<S extends CategorySlug>(
+		category: S,
+	): CategoryName {
+		return CATEGORY_PATH[category].slice(1) as CategoryName
 	}
 
 	async searchCategory<S extends CategorySlug>(
@@ -127,6 +136,43 @@ export class MarketAPI {
 
 	async searchHytale(query?: CategoryQuery<'hytale'>) {
 		return this.searchCategory('hytale', query)
+	}
+
+	async listCategories(query?: QueryByPath<'/category'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/category',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async getCategoryParams(
+		categoryName: PathByPath<'/{categoryName}/params'>['categoryName'],
+	) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET('/{categoryName}/params', {
+				params: { path: { categoryName } },
+			})
+		})
+	}
+
+	async getCategoryGames(
+		categoryName: PathByPath<'/{categoryName}/games'>['categoryName'],
+	) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET('/{categoryName}/games', {
+				params: { path: { categoryName } },
+			})
+		})
+	}
+
+	async getCategoryParamsBySlug<S extends CategorySlug>(category: S) {
+		return this.getCategoryParams(this.slugToCategoryName(category))
+	}
+
+	async getCategoryGamesBySlug<S extends CategorySlug>(category: S) {
+		return this.getCategoryGames(this.slugToCategoryName(category))
 	}
 
 	// More convenience methods can be added here
