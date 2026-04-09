@@ -1,4 +1,4 @@
-import type { HTTPClient } from "../core"
+import type { HTTPClient } from '../core/index.js'
 
 export class ForumAPI {
 	private http: HTTPClient
