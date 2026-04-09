@@ -1,4 +1,4 @@
-import type { paths as MarketPaths } from "../../core/generated/market.types"
+import type { paths as MarketPaths } from '../../core/generated/market.types.js'
 
 export const CATEGORY_OP = {
 	steam: 'Category.Steam',

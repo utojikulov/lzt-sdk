@@ -38,17 +38,17 @@
 			"import": "./dist/forum/*.js"
 		},
 		"./errors": {
-			"types": "./dist/errors/index.d.ts",
-			"import": "./dist/errors/index.js",
-			"default": "./dist/errors/index.js"
+			"types": "./dist/core/errors/index.d.ts",
+			"import": "./dist/core/errors/index.js",
+			"default": "./dist/core/errors/index.js"
 		},
 		"./errors/*": {
-			"types": "./dist/errors/*.d.ts",
-			"import": "./dist/errors/*.js"
+			"types": "./dist/core/errors/*.d.ts",
+			"import": "./dist/core/errors/*.js"
 		},
 		"./errors/*.js": {
-			"types": "./dist/errors/*.d.ts",
-			"import": "./dist/errors/*.js"
+			"types": "./dist/core/errors/*.d.ts",
+			"import": "./dist/core/errors/*.js"
 		},
 		"./types": {
 			"types": "./dist/types/index.d.ts",
@@ -64,42 +64,43 @@
 			"import": "./dist/types/*.js"
 		},
 		"./generated": {
-			"types": "./dist/generated/index.d.ts",
-			"import": "./dist/generated/index.js",
-			"default": "./dist/generated/index.js"
+			"types": "./dist/core/generated/index.d.ts",
+			"import": "./dist/core/generated/index.js",
+			"default": "./dist/core/generated/index.js"
 		},
 		"./generated/*": {
-			"types": "./dist/generated/*.d.ts",
-			"import": "./dist/generated/*.js"
+			"types": "./dist/core/generated/*.d.ts",
+			"import": "./dist/core/generated/*.js"
 		},
 		"./generated/*.js": {
-			"types": "./dist/generated/*.d.ts",
-			"import": "./dist/generated/*.js"
+			"types": "./dist/core/generated/*.d.ts",
+			"import": "./dist/core/generated/*.js"
 		},
 		"./http": {
-			"types": "./dist/http/index.d.ts",
-			"import": "./dist/http/index.js",
-			"default": "./dist/http/index.js"
+			"types": "./dist/core/http/index.d.ts",
+			"import": "./dist/core/http/index.js",
+			"default": "./dist/core/http/index.js"
 		},
 		"./http/*": {
-			"types": "./dist/http/*.d.ts",
-			"import": "./dist/http/*.js"
+			"types": "./dist/core/http/*.d.ts",
+			"import": "./dist/core/http/*.js"
 		},
 		"./http/*.js": {
-			"types": "./dist/http/*.d.ts",
-			"import": "./dist/http/*.js"
+			"types": "./dist/core/http/*.d.ts",
+			"import": "./dist/core/http/*.js"
 		},
 		"./dist/market": "./dist/market/index.js",
 		"./dist/forum": "./dist/forum/index.js",
-		"./dist/errors": "./dist/errors/index.js",
+		"./dist/errors": "./dist/core/errors/index.js",
 		"./dist/types": "./dist/types/index.js",
-		"./dist/generated": "./dist/generated/index.js",
-		"./dist/http": "./dist/http/index.js",
+		"./dist/generated": "./dist/core/generated/index.js",
+		"./dist/http": "./dist/core/http/index.js",
 		"./dist/*": "./dist/*",
 		"./package.json": "./package.json"
 	},
 	"scripts": {
-		"build": "tsc",
+		"clean": "node -e \"require('node:fs').rmSync('dist',{ recursive:true, force:true })\"",
+		"build": "npm run clean && tsc",
 		"build:tsdown": "tsdown",
 		"dev": "tsc --watch",
 		"test": "vitest",
@@ -109,7 +110,7 @@
 		"lint": "eslint src/**/*.ts",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"typecheck": "tsc --noEmit",
-		"generate:types": "openapi-typescript bak/market.json -o src/generated/market.types.ts && openapi-typescript bak/forum.json -o src/generated/forum.types.ts",
+		"generate:types": "openapi-typescript bak/market.json -o src/core/generated/market.types.ts && openapi-typescript bak/forum.json -o src/core/generated/forum.types.ts",
 		"prepublishOnly": "npm run build"
 	},
 	"files": [
