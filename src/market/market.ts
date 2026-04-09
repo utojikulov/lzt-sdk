@@ -745,6 +745,31 @@ export class MarketAPI {
 		})
 	}
 
+	/** cart */
+	async getCart(query?: OpQuery<'Cart.Get'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/cart',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async addToCart(body: OpBody<'Cart.Add'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.POST('/cart', { body })
+		})
+	}
+
+	async removeFromCart(body?: OpBody<'Cart.Delete'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.DELETE(
+				'/cart',
+				body === undefined ? {} : { body },
+			)
+		})
+	}
+
 	// Steam-specific managing methods intentionally skipped for now.
 
 	// More convenience methods can be added here
