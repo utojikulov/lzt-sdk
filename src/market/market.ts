@@ -26,6 +26,7 @@ export class MarketAPI {
 		return CATEGORY_PATH[category].slice(1) as CategoryName
 	}
 
+	/** category search */
 	async searchCategory<S extends CategorySlug>(
 		category: S,
 		query?: CategoryQuery<S>,
@@ -138,6 +139,7 @@ export class MarketAPI {
 		return this.searchCategory('hytale', query)
 	}
 
+	/** categories */
 	async listCategories(query?: QueryByPath<'/category'>) {
 		return this.http.withRateLimit(async () => {
 			return await this.http.market.GET(
@@ -173,6 +175,66 @@ export class MarketAPI {
 
 	async getCategoryGamesBySlug<S extends CategorySlug>(category: S) {
 		return this.getCategoryGames(this.slugToCategoryName(category))
+	}
+
+	/** accounts list*/
+	async listUserItems(query?: QueryByPath<'/user/items'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/user/items',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async listUserOrders(query?: QueryByPath<'/user/orders'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/user/orders',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async listUserItemStates(query?: QueryByPath<'/user/item-states'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/user/item-states',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async downloadUserList(
+		type: PathByPath<'/user/{type}/download'>['type'],
+		query?: QueryByPath<'/user/{type}/download'>,
+	) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET('/user/{type}/download', {
+				params: {
+					path: { type },
+					...(query === undefined ? {} : { query }),
+				},
+			})
+		})
+	}
+
+	async listFavorites(query?: QueryByPath<'/fave'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/fave',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
+	}
+
+	async listViewed(query?: QueryByPath<'/viewed'>) {
+		return this.http.withRateLimit(async () => {
+			return await this.http.market.GET(
+				'/viewed',
+				query === undefined ? {} : { params: { query } },
+			)
+		})
 	}
 
 	// More convenience methods can be added here
