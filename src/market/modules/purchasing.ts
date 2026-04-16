@@ -1,66 +1,42 @@
 import type { HTTPClient } from '../../core/index.js'
-import type { OpBody, OpPath } from '../common/index.js'
+import type { OpBody, OpPath } from '../common/types.js'
 
 export class PurchasingModule {
 	constructor(private http: HTTPClient) {}
 
-	async fastBuy(
-		item_id: OpPath<'Purchasing.FastBuy'>['item_id'],
-		body?: OpBody<'Purchasing.FastBuy'>,
-	) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/{item_id}/fast-buy',
-				body === undefined
-					? { params: { path: { item_id } } }
-					: { params: { path: { item_id } }, body },
-			)
+	async check(path: OpPath<'Purchasing.Check'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/{item_id}/check-account', { params: { path } })
 		})
 	}
 
-	async checkAccount(item_id: OpPath<'Purchasing.Check'>['item_id']) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST('/{item_id}/check-account', {
-				params: { path: { item_id } },
-			})
+	async confirm(path: OpPath<'Purchasing.Confirm'>, body?: OpBody<'Purchasing.Confirm'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/{item_id}/confirm-buy', body === undefined
+				? { params: { path } }
+				: { params: { path }, body })
 		})
 	}
 
-	async confirmBuy(
-		item_id: OpPath<'Purchasing.Confirm'>['item_id'],
-		body?: OpBody<'Purchasing.Confirm'>,
-	) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/{item_id}/confirm-buy',
-				body === undefined
-					? { params: { path: { item_id } } }
-					: { params: { path: { item_id } }, body },
-			)
+	async discountCancel(path: OpPath<'Purchasing.DiscountCancel'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.DELETE('/{item_id}/discount', { params: { path } })
 		})
 	}
 
-	async requestDiscount(
-		item_id: OpPath<'Purchasing.DiscountRequest'>['item_id'],
-		body?: OpBody<'Purchasing.DiscountRequest'>,
-	) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/{item_id}/discount',
-				body === undefined
-					? { params: { path: { item_id } } }
-					: { params: { path: { item_id } }, body },
-			)
+	async discountRequest(path: OpPath<'Purchasing.DiscountRequest'>, body?: OpBody<'Purchasing.DiscountRequest'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/{item_id}/discount', body === undefined
+				? { params: { path } }
+				: { params: { path }, body })
 		})
 	}
 
-	async cancelDiscount(
-		item_id: OpPath<'Purchasing.DiscountCancel'>['item_id'],
-	) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.DELETE('/{item_id}/discount', {
-				params: { path: { item_id } },
-			})
+	async fastBuy(path: OpPath<'Purchasing.FastBuy'>, body?: OpBody<'Purchasing.FastBuy'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/{item_id}/fast-buy', body === undefined
+				? { params: { path } }
+				: { params: { path }, body })
 		})
 	}
 }

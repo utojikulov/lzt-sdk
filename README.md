@@ -8,8 +8,8 @@ const client = new LZTClient({
   intervalBetweenRequests: 3000,
 })
 
-const item = await client.market.managing.getItem('12345678', {
-        parse_same_item_ids: true 
+const item = await client.market.managing.get({ item_id: '12345678' }, {
+        parse_same_item_ids: true
 })
 ```
 
@@ -30,6 +30,14 @@ const { data, error } = await client.forum.raw.GET('/users/{user_id}', {
 All parameters are fully typed based on the OpenAPI spec!
 
 all typings are going to be refactored slowly from generated to fully handwritten types in future.
+
+## Regeneration
+
+```bash
+npm run generate
+```
+
+This refreshes both generated OpenAPI types and generated OOP API methods from `bak/market.json` and `bak/forum.json`.
 
 ## Links
 

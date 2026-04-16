@@ -101,7 +101,7 @@
 	"scripts": {
 		"clean": "node -e \"require('node:fs').rmSync('dist',{ recursive:true, force:true })\"",
 		"build": "npm run clean && tsc",
-		"build:tsdown": "tsdown",
+		"build:tsdown": "npm run clean && tsdown",
 		"dev": "tsc --watch",
 		"test": "vitest",
 		"test:watch": "vitest --watch",
@@ -110,7 +110,9 @@
 		"lint": "eslint src/**/*.ts",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"typecheck": "tsc --noEmit",
-		"generate:types": "openapi-typescript bak/market.json -o src/core/generated/market.types.ts && openapi-typescript bak/forum.json -o src/core/generated/forum.types.ts",
+		"generate:types": "node scripts/generate-openapi-types.mjs",
+		"generate:api": "node scripts/generate-api-methods.mjs",
+		"generate": "npm run generate:types && npm run generate:api",
 		"prepublishOnly": "npm run build"
 	},
 	"files": [
@@ -125,7 +127,8 @@
 	"license": "ISC",
 	"dependencies": {
 		"dotenv": "^17.4.1",
-		"openapi-fetch": "^0.17.0"
+		"openapi-fetch": "^0.17.0",
+		"pino": "^10.3.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
