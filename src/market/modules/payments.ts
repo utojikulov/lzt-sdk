@@ -1,129 +1,78 @@
 import type { HTTPClient } from '../../core/index.js'
-import type { OpBody, OpQuery } from '../common/index.js'
+import type { OpBody, OpQuery } from '../common/types.js'
 
 export class PaymentsModule {
 	constructor(private http: HTTPClient) {}
 
-	async getInvoice(query?: OpQuery<'Payments.Invoice.Get'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/invoice',
-				query === undefined ? {} : { params: { query } },
-			)
+	async balanceList() {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/balance/exchange')
 		})
 	}
 
-	async createInvoice(body?: OpBody<'Payments.Invoice.Create'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/invoice',
-				body === undefined ? {} : { body },
-			)
+	async balanceExchange(body?: OpBody<'Payments.BalanceExchange'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/balance/exchange', body === undefined ? {} : { body })
 		})
 	}
 
-	async listInvoices(query?: OpQuery<'Payments.Invoice.List'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/invoice/list',
-				query === undefined ? {} : { params: { query } },
-			)
+	async payout(body?: OpBody<'Payments.Payout'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/balance/payout', body === undefined ? {} : { body })
 		})
 	}
 
-	async getCurrency() {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET('/currency')
+	async payoutServices() {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/balance/payout/services')
 		})
 	}
 
-	async getListOfBalances() {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET('/balance/exchange')
+	async transfer(body?: OpBody<'Payments.Transfer'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/balance/transfer', body === undefined ? {} : { body })
 		})
 	}
 
-	async exchangeBalance(body?: OpBody<'Payments.BalanceExchange'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/balance/exchange',
-				body === undefined ? {} : { body },
-			)
+	async cancel(body?: OpBody<'Payments.Cancel'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/balance/transfer/cancel', body === undefined ? {} : { body })
 		})
 	}
 
-	async transferMoney(body?: OpBody<'Payments.Transfer'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/balance/transfer',
-				body === undefined ? {} : { body },
-			)
+	async fee(query?: OpQuery<'Payments.Fee'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/balance/transfer/fee', query === undefined ? {} : { params: { query } })
 		})
 	}
 
-	async checkTransferFee(query?: OpQuery<'Payments.Fee'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/balance/transfer/fee',
-				query === undefined ? {} : { params: { query } },
-			)
+	async currency() {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/currency')
 		})
 	}
 
-	async cancelTransfer(body?: OpBody<'Payments.Cancel'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/balance/transfer/cancel',
-				body === undefined ? {} : { body },
-			)
+	async invoiceGet(query?: OpQuery<'Payments.Invoice.Get'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/invoice', query === undefined ? {} : { params: { query } })
 		})
 	}
 
-	async getPaymentsHistory(query?: OpQuery<'Payments.History'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/user/payments',
-				query === undefined ? {} : { params: { query } },
-			)
+	async invoiceCreate(body?: OpBody<'Payments.Invoice.Create'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.POST('/invoice', body === undefined ? {} : { body })
 		})
 	}
 
-	async getAutoPayments() {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET('/auto-payments')
+	async invoiceList(query?: OpQuery<'Payments.Invoice.List'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/invoice/list', query === undefined ? {} : { params: { query } })
 		})
 	}
 
-	async createAutoPayment(body?: OpBody<'AutoPayments.Create'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/auto-payment',
-				body === undefined ? {} : { body },
-			)
-		})
-	}
-
-	async deleteAutoPayment(body?: OpBody<'AutoPayments.Delete'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.DELETE(
-				'/auto-payment',
-				body === undefined ? {} : { body },
-			)
-		})
-	}
-
-	async getPayoutServices() {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET('/balance/payout/services')
-		})
-	}
-
-	async createPayout(body?: OpBody<'Payments.Payout'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.POST(
-				'/balance/payout',
-				body === undefined ? {} : { body },
-			)
+	async history(query?: OpQuery<'Payments.History'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/user/payments', query === undefined ? {} : { params: { query } })
 		})
 	}
 }

@@ -7,7 +7,7 @@ const client = new LZTClient({
 })
 
 async function main() {
-	const searchResult = await client.market.search({
+	const searchResult = await client.market.category.all({
 		pmin: 100,
 		pmax: 500,
 	})
@@ -29,7 +29,7 @@ async function main() {
 		console.log('Steam accounts found:', data?.items?.length)
 	}
 
-	const userResult = await client.forum.getUser(123456)
+	const userResult = await client.forum.users.get({ user_id: 123456 })
 	console.log('User:', userResult.data)
 
 	const { data: threads, error: threadsError } = await client.forum.raw.GET(

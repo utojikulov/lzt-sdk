@@ -1,33 +1,24 @@
 import type { HTTPClient } from '../../core/index.js'
-import type { OpBody, OpQuery } from '../common/index.js'
+import type { OpBody, OpQuery } from '../common/types.js'
 
 export class ProfileModule {
 	constructor(private http: HTTPClient) {}
 
-	async getProfile(query?: OpQuery<'Profile.Get'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/me',
-				query === undefined ? {} : { params: { query } },
-			)
+	async claims(query?: OpQuery<'Profile.Claims'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/claims', query === undefined ? {} : { params: { query } })
 		})
 	}
 
-	async editMarketSettings(body?: OpBody<'Profile.Edit'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.PUT(
-				'/me',
-				body === undefined ? {} : { body },
-			)
+	async get(query?: OpQuery<'Profile.Get'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.GET('/me', query === undefined ? {} : { params: { query } })
 		})
 	}
 
-	async getClaims(query?: OpQuery<'Profile.Claims'>) {
-		return this.http.withRateLimit(async () => {
-			return await this.http.market.GET(
-				'/claims',
-				query === undefined ? {} : { params: { query } },
-			)
+	async edit(body?: OpBody<'Profile.Edit'>) {
+		return this.http.withRateLimit(() => {
+			return this.http.market.PUT('/me', body === undefined ? {} : { body })
 		})
 	}
 }
