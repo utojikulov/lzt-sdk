@@ -3,47 +3,84 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const API_TOKEN = process.env.LZT_TOKEN
+function getToken() {
+	const token = process.env.LZT_TOKEN
 
-if (!API_TOKEN) {
-	console.error('❌ Please set LZT_TOKEN environment variable')
-	console.log('\nRun: export LZT_TOKEN="your_token"')
-	process.exit(1)
+	if (!token) {
+		throw new Error('LZT_TOKEN not found.')
+	}
+
+	return token
 }
 
-const client = new LZTClient({
-	token: API_TOKEN,
-})
+function createClient() {
+	return new LZTClient({
+		token: getToken(),
+	})
+}
 
-const { data, error } = await client.market.raw.GET('/user/orders', {
-	params: {
-		query: {
-			category_id: 24,
-		},
-	},
-})
-
-const clean = data.items.map(item => {
+function parseTelegramJson(item) {
 	try {
 		return JSON.parse(item.telegram_json)
-	} catch (error) {
+	} catch (err) {
 		console.error(
-			`failed to parse telegram_json for item_id: ${item.item_id}`,
+			`Failed to parse telegram_json for item_id: ${item.item_id}`,
 		)
-		console.error(error)
+		console.error(err)
+		return null
 	}
-})
-
-if (error) {
-	console.error('❌ Error:', error)
-} else {
-	console.log('✅ Found', clean, 'accounts')
 }
 
-const userResult = await client.market.raw.GET('/me')
-if (!userResult.error) {
-	console.log('✅ User:', userResult.data?.user?.username)
-	console.log('✅ Balance:', userResult.data?.user?.balance)
+function mapTelegramItems(items = []) {
+	return items.map(parseTelegramJson).filter(Boolean)
 }
 
-console.log('\n✨ Test completed!\n')
+async function fetchOrdersRaw(client) {
+	const { data, error } = await client.market.raw.GET('/user/orders', {
+		params: {
+			query: {
+				category_id: 24,
+			},
+		},
+	})
+
+	if (error) {
+		throw new Error(`Raw orders request failed: ${JSON.stringify(error)}`)
+	}
+
+	return mapTelegramItems(data?.items)
+}
+
+async function fetchOrdersTyped(client) {
+	const { data, error } = await client.market.list.orders()
+
+	if (error) {
+		throw new Error(`Typed orders request failed: ${JSON.stringify(error)}`)
+	}
+
+	return mapTelegramItems(data?.items)
+}
+
+function printAccounts(label, accounts) {
+	console.log(`✅ ${label}: found ${accounts.length} accounts`)
+	console.log(accounts)
+}
+
+async function main() {
+	try {
+		const client = createClient()
+
+		const rawAccounts = await fetchOrdersRaw(client)
+		printAccounts('Raw method', rawAccounts)
+
+		const typedAccounts = await fetchOrdersTyped(client)
+		printAccounts('Typed method', typedAccounts)
+
+		console.log('\n✨ Test completed!\n')
+	} catch (err) {
+		console.error('❌ Error:', err.message || err)
+		process.exit(1)
+	}
+}
+
+main()
